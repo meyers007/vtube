@@ -1,0 +1,163 @@
+{% extends "common.html" %}
+{% block content %}
+<style>
+.split {
+    display: flex;
+    flex-direction: row;
+}
+
+.gutter {
+    background-color: #eee;
+    background-repeat: no-repeat;
+    background-position: 50%;
+}
+
+.gutter.gutter-horizontal {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==');
+    cursor: col-resize;
+}
+.gutter.gutter-vertical {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==');
+    cursor: col-resize;
+    z-index: 1000;
+}
+
+.dflex {
+    border-color: #e0e0e0;
+    flex: 1 1 auto;
+    display: flex;  flex-flow: column;
+    overflow: auto;
+}
+
+</style>
+
+<script src="/static/node_modules/split.js/dist/split.min.js" ></script>
+<script src="/static/geoui/splitter1.js/"></script>
+<link href="/static/geoui/slidermenu.css" rel="stylesheet" />
+<script src="/static/geoui/slidermenu.js"></script>
+
+{% include "vtube/sidebar.html" %}
+
+<div class="content fcontainer" style="height: calc(100vh - 80px);">
+    <div class="split content" style="flex: 1 1 auto;">
+        <div id="one" class="dflex" style="padding-left:5px; min-width: 1px; overflow: scroll;">
+            <div>
+                    <div style="font-size: smaller;color:#777; padding: 5px;">
+                        <label class="label1">filter</label>
+                        <input class="input1" id=vfilter   size=2 value=*>  
+                    </div>
+                    <div id="vlist">
+
+                    </div>
+            </div>
+
+        </div>
+        <div id="two" class=dflex >
+            <div id=oneh style="height: 190px;width: 100%; background-size:100% 100%;">
+                <!-- img src="/static/media/cap/houseprice.png" height="100%" / --> 
+                <video id="vplayer" width="100%"  controls>
+                    <source src="/static/gpt/videos/index.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                    <iframe id=youtube style="background-color: #e0e0e0;border-radius: 6px; width:100%; height: 100%; display: none;" 
+                    frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; " >
+                    </iframe>
+            </div>
+
+            <div id="tabs" class=tabs style="border: 0px; border-left: 1px solid #f7f7f7">
+                <ul>
+                    <li><a href="#tabs-trans"  >Transripts</a></li>
+                    <li><a href="#tabs-disc"   >Discussions</a></li>
+                    <li><a href="#tabs-add"    >Add to Library</a></li>
+                </ul>
+                <div style="width:100%; height: 1px; background: #efefef"> </div>
+                <div class="tabs-details" style="width: 80%;" >
+                    <div id="tabs-disc"     class="tab-content" >Data</div>
+                    <div id="tabs-add" class="tab-content" >Code</div>
+                </div>
+            </div>
+      </div>
+    </div>
+    <div class="footer">: </div>
+</div>
+<!-- -----------------------------------------------------------------------------
+    SCRIPT
+ * This assumes you have a service working
+------------------------------------------------------------------------------- -->
+<script>
+    
+var sizes = localStorage.getItem('split-sizes')
+if (sizes) {
+    sizes = JSON.parse(sizes)
+} else {
+    sizes = [25, 75]
+}
+
+var sizes1 = localStorage.getItem('split-sizes1')
+if (sizes1) {
+    sizes1 = JSON.parse(sizes1)
+} else {
+    sizes1 = [50, 50]
+}
+
+Split(['#one', '#two'], {
+    sizes : sizes,
+    minSize: [10, 100],
+    onDragEnd: function (sizes) {
+        localStorage.setItem('split-sizes', JSON.stringify(sizes))
+    },
+})
+
+Split(['#oneh', '#tabs'], {
+    sizes : sizes1,
+    minSize: [150, 2],
+    direction: "vertical",
+    //aMin: "50%",
+    //bMin: "10%",
+    //dragging: true,
+    onDragEnd: function (sizes) {
+        localStorage.setItem('split-sizes1', JSON.stringify(sizes))
+    },
+})
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+function setVideoSource(src){
+    //src="https://www.youtube.com/embed/Yq0QkCxoTHM?si=H3jXvJfBfK8xjpL7"
+
+    if (src.includes("youtube")){
+        $('#youtube').attr('src',src)
+        $('#youtube').show()
+        $('#vplayer').hide()
+    } else {
+        $('#youtube').hide()
+        $('#vplayer').show()
+        $('#vplayer').attr('src',src)
+    }
+}
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+let vlist = [
+    {label: "test1", src:"https://www.youtube.com/embed/Yq0QkCxoTHM?si=H3jXvJfBfK8xjpL7"},
+    {label: "test2", src:"/static/gpt/videos/index.mp4"},
+]
+function setList() {
+    let html=""
+
+    for (var v in vlist) {
+        var it = vlist[v]
+        html += `<li><a href=# onclick=setVideoSource('${it.src}')> ${it.label} </a>\n`
+    }
+    $('#vlist').html(html)
+}
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+function myMenuItemClicked(f, a){
+    $('#capid').val(f)
+    setVideoSource(f)
+
+    menusetActive(a)
+    window.location = window.location.href.split('?')[0]+ `?q=${f}`
+}
+
+$(document).ready(function() {
+    getSideBar()
+})
+</script>
+{% endblock %}

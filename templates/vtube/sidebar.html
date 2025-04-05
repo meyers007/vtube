@@ -1,0 +1,60 @@
+<script>
+function getSideBar() {
+    getmenu(sidebar, '#vlist', "<b>Videos</b>")
+}
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+function setVideoSource(src){
+    //src="https://www.youtube.com/embed/Yq0QkCxoTHM?si=H3jXvJfBfK8xjpL7"
+
+    if (src.includes("youtube")){
+        $('#youtube').attr('src',src)
+        $('#youtube').show()
+        $('#vplayer').hide()
+    } else {
+        $('#youtube').hide()
+        $('#vplayer').show()
+        $('#vplayer').attr('src',src)
+    }
+}
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+function myMenuItemClicked(f, a){
+    $('#capid').val(f)
+    setVideoSource(f)
+
+    menusetActive(a)
+    window.location = window.location.href.split('?')[0]+ `?q=${f}`
+}
+menuItemClicked = myMenuItemClicked
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+let sidebar=`
+#facial_recognition         ;<i class="fa fa-file-video" style="color:red"></i> ;;/static/vtube/videos/index.mp4
+#stock_prediction           ;<i class="fa fa-file-video" style="color:red"></i> ;;https://www.youtube.com/embed/Yq0QkCxoTHM?si=H3jXvJfBfK8xjpL7
+#Satellite Anomaly          ;<i class="fa fa-file-video" style="color:red"></i> ;;space_telem/
+
+---
+
+#Return to Kronos           ;fas fa-file-video ;; https://www.youtube.com/embed/Yq0QkCxoTHM?si=H3jXvJfBfK8xjpL7
+##Global Graph Analysis     ;fas fa-file-video ;; /static/vtube/videos/index.mp4
+##Global Object Search      ;fas fa-file-video ;; https://www.youtube.com/embed/Yq0QkCxoTHM?si=H3jXvJfBfK8xjpL7
+##Disaster Rescue           ;fas fa-file-video ;; DisasterStHimarkCitizenScienceRescue/
+#Disaster Situanl Awareness ;fas fa-file-video ;; DisasterStHimarkCrowdsourcingSituationalAwareness;
+#Disaster People            ;fas fa-file-video ;; DisasterStHimarkVoicePeople
+#Mayhem Communication       ;fas fa-file-video ;; MayhemDinoFunWorldVisitorCommunication/
+#Mayhem VisitorMovement     ;fas fa-file-video ;; MayhemDinoFunWorldVisitorMovement/
+#Mystery Imagery            ;fas fa-file-video ;; MysteryWildlifePreserveIMultispectralImagery/
+#Mystery PlumeAnalysis      ;fas fa-file-video ;; MysteryWildlifePreserveIPlumeAnalysis/
+#Mystery VehiclePatterns    ;fas fa-file-video ;; MysteryWildlifePreserveIVehiclePatternsLife/
+#Suspense CheepShots        ;fas fa-file-video ;; SuspenseWildlifePreserveCheepShots/
+#Suspense Duck Water        ;fas fa-file-video ;; SuspenseWildlifePreserveDuckWater/
+#Suspense Organized Crime   ;fas fa-file-video ;; SuspenseWildlifePreserveOrganizedCrime/
+#TheKronos Geospatial       ;fas fa-file-video ;; TheKronosIncidentGeospatial/
+#TheKronos Kidnapping       ;fas fa-file-video ;; TheKronosIncidentTheKidnapping/
+#find-fa-icon               ;fas fa-file-video ;; find-fa-icon/
+--- 
+<br/>
+<div style="position: relative;bottom:10;width:100%;">
+---
+#About             ; fas fa-book-reader  ;;                    ;;
+</div>
+`    
+</script>
