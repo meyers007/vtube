@@ -28,7 +28,12 @@
     display: flex;  flex-flow: column;
     overflow: auto;
 }
-
+.tab-content {
+    text-align: initial;
+    overflow: auto;
+    font-size: small;
+    padding: 20px !important;
+}
 </style>
 
 <script src="/static/node_modules/split.js/dist/split.min.js" ></script>
@@ -56,7 +61,7 @@
             <div id=oneh style="height: 190px;width: 100%; background-size:100% 100%;">
                 <!-- img src="/static/media/cap/houseprice.png" height="100%" / --> 
                 <video id="vplayer" width="100%"  controls>
-                    <source src="/static/gpt/videos/index.mp4" type="video/mp4">
+                    <source src="/static/vtube/videos/index.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
                     <iframe id=youtube style="background-color: #e0e0e0;border-radius: 6px; width:100%; height: 100%; display: none;" 
@@ -66,14 +71,24 @@
 
             <div id="tabs" class=tabs style="border: 0px; border-left: 1px solid #f7f7f7">
                 <ul>
-                    <li><a href="#tabs-trans"  >Transripts</a></li>
+                    <li><a href="#tabs-trans"  >Transcripts</a></li>
                     <li><a href="#tabs-disc"   >Discussions</a></li>
-                    <li><a href="#tabs-add"    >Add to Library</a></li>
+                    <li><a href="#tabs-add"    >Summary</a></li>
                 </ul>
                 <div style="width:100%; height: 1px; background: #efefef"> </div>
-                <div class="tabs-details" style="width: 80%;" >
-                    <div id="tabs-disc"     class="tab-content" >Data</div>
-                    <div id="tabs-add" class="tab-content" >Code</div>
+                <div class="tabs-details" style="width: 100%;" >
+                    <div id="tabs-trans"    class="tab-content" >If transcripts are available, it will show here </div>
+                    <div id="tabs-disc"     class="tab-content" >
+                        <input class="input1" id=vcomment
+                        style="border: 0; border-bottom: 1px solid gray;width:100%"   >  
+                        <a href=# onclick=""> Add Comment</a>
+                        <div id="pcomments">
+
+                        </div>
+                    </div>
+                    <div id="tabs-add" class="tab-content" >
+
+                    </div>
                 </div>
             </div>
       </div>
@@ -120,44 +135,11 @@ Split(['#oneh', '#tabs'], {
     },
 })
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-function setVideoSource(src){
-    //src="https://www.youtube.com/embed/Yq0QkCxoTHM?si=H3jXvJfBfK8xjpL7"
-
-    if (src.includes("youtube")){
-        $('#youtube').attr('src',src)
-        $('#youtube').show()
-        $('#vplayer').hide()
-    } else {
-        $('#youtube').hide()
-        $('#vplayer').show()
-        $('#vplayer').attr('src',src)
-    }
-}
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-let vlist = [
-    {label: "test1", src:"https://www.youtube.com/embed/Yq0QkCxoTHM?si=H3jXvJfBfK8xjpL7"},
-    {label: "test2", src:"/static/gpt/videos/index.mp4"},
-]
-function setList() {
-    let html=""
-
-    for (var v in vlist) {
-        var it = vlist[v]
-        html += `<li><a href=# onclick=setVideoSource('${it.src}')> ${it.label} </a>\n`
-    }
-    $('#vlist').html(html)
-}
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-function myMenuItemClicked(f, a){
-    $('#capid').val(f)
-    setVideoSource(f)
-
-    menusetActive(a)
-    window.location = window.location.href.split('?')[0]+ `?q=${f}`
-}
 
 $(document).ready(function() {
+
     getSideBar()
+
 })
 </script>
 {% endblock %}

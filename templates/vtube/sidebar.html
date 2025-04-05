@@ -1,6 +1,21 @@
 <script>
+let CURRENT_MENU = 'default.menu'     
+let CURRENT_ITEM = ''     
+let CURRENT_MENU_CONTENTS = ''     
 function getSideBar() {
-    getmenu(sidebar, '#vlist', "<b>Videos</b>")
+    var urlp = new URL(window.location.href)
+    var defMenu = urlp.searchParams.get('menu') || 'default.menu'
+    var defItem = urlp.searchParams.get('item') || ''
+
+    CURRENT_MENU = defMenu
+    CURRENT_ITEM = defItem
+    
+    $.get(`/static/vtube/${defMenu}`, function(data) {
+            CURRENT_MENU_CONTENTS = data;
+            getmenu(CURRENT_MENU_CONTENTS, '#vlist', "<b>Videos</b>")
+        }, 'text').fail(function() {
+            console.error("An error occurred while reading the file.");
+    });
 }
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 function setVideoSource(src){
@@ -18,41 +33,29 @@ function setVideoSource(src){
 }
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function myMenuItemClicked(f, a){
-    $('#capid').val(f)
-    setVideoSource(f)
+    var src = f
+    setVideoSource(src)
+    var ss = src.split("/")
+    ss = ss[ss.length -1]
 
     menusetActive(a)
-    window.location = window.location.href.split('?')[0]+ `?q=${f}`
+    CURRENT_ITEM = a.text.trim()
+    //window.location = window.location.href.split('?')[0]+ `?menu=${a}`
+    var new_URL=window.location.href.split('?')[0]+ `?menu=${CURRENT_MENU}&item=${CURRENT_ITEM}`
+    window.history.replaceState( {} , window.document.title, new_URL );
+
 }
 menuItemClicked = myMenuItemClicked
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 let sidebar=`
-#facial_recognition         ;<i class="fa fa-file-video" style="color:red"></i> ;;/static/vtube/videos/index.mp4
-#stock_prediction           ;<i class="fa fa-file-video" style="color:red"></i> ;;https://www.youtube.com/embed/Yq0QkCxoTHM?si=H3jXvJfBfK8xjpL7
-#Satellite Anomaly          ;<i class="fa fa-file-video" style="color:red"></i> ;;space_telem/
-
+#Label1     ;<i class="fa fa-file-video" style="color:red"></i> ;;/static/vtube/videos/index.mp4
+#Label1     ;<i class="fa fa-file-video" style="color:red"></i> ;;https://www.youtube.com/embed/Yq0QkCxoTHM?si=H3jXvJfBfK8xjpL7
+#Label1     ;<i class="fa fa-file-video" style="color:red"></i> ;;https://github.com/meyers007/vtube/raw/refs/heads/main/static/vtube/videos/index1.mp4
 ---
-
-#Return to Kronos           ;fas fa-file-video ;; https://www.youtube.com/embed/Yq0QkCxoTHM?si=H3jXvJfBfK8xjpL7
-##Global Graph Analysis     ;fas fa-file-video ;; /static/vtube/videos/index.mp4
-##Global Object Search      ;fas fa-file-video ;; https://www.youtube.com/embed/Yq0QkCxoTHM?si=H3jXvJfBfK8xjpL7
-##Disaster Rescue           ;fas fa-file-video ;; DisasterStHimarkCitizenScienceRescue/
-#Disaster Situanl Awareness ;fas fa-file-video ;; DisasterStHimarkCrowdsourcingSituationalAwareness;
-#Disaster People            ;fas fa-file-video ;; DisasterStHimarkVoicePeople
-#Mayhem Communication       ;fas fa-file-video ;; MayhemDinoFunWorldVisitorCommunication/
-#Mayhem VisitorMovement     ;fas fa-file-video ;; MayhemDinoFunWorldVisitorMovement/
-#Mystery Imagery            ;fas fa-file-video ;; MysteryWildlifePreserveIMultispectralImagery/
-#Mystery PlumeAnalysis      ;fas fa-file-video ;; MysteryWildlifePreserveIPlumeAnalysis/
-#Mystery VehiclePatterns    ;fas fa-file-video ;; MysteryWildlifePreserveIVehiclePatternsLife/
-#Suspense CheepShots        ;fas fa-file-video ;; SuspenseWildlifePreserveCheepShots/
-#Suspense Duck Water        ;fas fa-file-video ;; SuspenseWildlifePreserveDuckWater/
-#Suspense Organized Crime   ;fas fa-file-video ;; SuspenseWildlifePreserveOrganizedCrime/
-#TheKronos Geospatial       ;fas fa-file-video ;; TheKronosIncidentGeospatial/
-#TheKronos Kidnapping       ;fas fa-file-video ;; TheKronosIncidentTheKidnapping/
-#find-fa-icon               ;fas fa-file-video ;; find-fa-icon/
+#Label2     ;fas fa-file-video ;; https://www.youtube.com/embed/Yq0QkCxoTHM?si=H3jXvJfBfK8xjpL7
+##Label2    ;fas fa-file-video ;; /static/vtube/videos/index.mp4
 --- 
-<br/>
-<div style="position: relative;bottom:10;width:100%;">
+# SAMPLE
 ---
 #About             ; fas fa-book-reader  ;;                    ;;
 </div>
