@@ -1,3 +1,13 @@
+<div id="one" class="dflex" style="padding-left:5px; min-width: 1px; overflow: scroll;">
+    <!-- div style="font-size: smaller;color:#777; padding: 5px;">
+        <label class="label1">filter</label>
+        <input class="input1" id=vfilter   size=2 value=*>  
+    </div -->
+    <div id="vlist">
+    </div>
+</div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <script>
 let CURRENT_MENU = 'default.menu'     
 let CURRENT_ITEM = ''     
@@ -12,10 +22,14 @@ function getSideBar() {
     
     $.get(`/static/vtube/${defMenu}`, function(data) {
             CURRENT_MENU_CONTENTS = data;
-            getmenu(CURRENT_MENU_CONTENTS, '#vlist', "<b>Videos</b>")
+            getmenu(CURRENT_MENU_CONTENTS, '#vlist', "<br/><H5>Videos</H5><br/>")
         }, 'text').fail(function() {
             console.error("An error occurred while reading the file.");
     });
+    console.log(CURRENT_ITEM)
+    if (CURRENT_ITEM){
+        setTimeout(findItemAndSet, 300, CURRENT_ITEM)
+    }
 }
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 function setVideoSource(src){
@@ -38,12 +52,13 @@ function myMenuItemClicked(f, a){
     var ss = src.split("/")
     ss = ss[ss.length -1]
 
-    menusetActive(a)
-    CURRENT_ITEM = a.text.trim()
-    //window.location = window.location.href.split('?')[0]+ `?menu=${a}`
-    var new_URL=window.location.href.split('?')[0]+ `?menu=${CURRENT_MENU}&item=${CURRENT_ITEM}`
-    window.history.replaceState( {} , window.document.title, new_URL );
-
+    if(a.text) {
+        menusetActive(a)
+        CURRENT_ITEM = a.text.trim()
+        //window.location = window.location.href.split('?')[0]+ `?menu=${a}`
+        var new_URL=window.location.href.split('?')[0]+ `?menu=${CURRENT_MENU}&item=${CURRENT_ITEM}`
+        window.history.replaceState( {} , window.document.title, new_URL );
+    }
 }
 menuItemClicked = myMenuItemClicked
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -60,4 +75,10 @@ let sidebar=`
 #About             ; fas fa-book-reader  ;;                    ;;
 </div>
 `    
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$(document).ready(function() {
+    getSideBar()
+})
+
 </script>

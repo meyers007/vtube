@@ -3,7 +3,6 @@ notebooks/models/*
 NNBook
 # ignore macOS hidden files
 *.DS_Store
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

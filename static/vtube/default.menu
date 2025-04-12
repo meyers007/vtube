@@ -1,12 +1,12 @@
-#Sample1        ;fas fa-file-video ;; 
-##Sample11      ;fas fa-file-video ;; /static/vtube/videos/index.mp4
-##Sample12      ;fas fa-file-video ;; https://www.youtube.com/embed/Yq0QkCxoTHM?si=H3jXvJfBfK8xjpL7
-##Sample13      ;fas fa-file-video ;; DisasterStHimarkCitizenScienceRescue/
-#Sample2        ;fas fa-file-video ;; DisasterStHimarkCrowdsourcingSituationalAwareness;
-#Sample3        ;fas fa-file-video ;; TheKronosIncidentTheKidnapping/
-#Sample4        ;fas fa-file-video ;; find-fa-icon/
+#Sample1        ;<i class="fas fa-home" style="font-size: 20px; color: red;" ></i> ;; 
+##Sample11      ;<i class="fa fa-youtube-play" style="font-size: 20px" ></i> ;; /static/vtube/videos/vtube/index1.mp4
+##Sample12      ;<i class="fa fa-youtube-play" style="font-size: 20px" ></i> ;; https://www.youtube.com/embed/Yq0QkCxoTHM?si=H3jXvJfBfK8xjpL7
+##Sample13      ;<i class="fa fa-youtube-play" style="font-size: 20px" ></i> ;; DisasterStHimarkCitizenScienceRescue/
+#Sample2        ;<i class="fa fa-youtube-play" style="font-size: 20px" ></i> ;; DisasterStHimarkCrowdsourcingSituationalAwareness;
+#Sample3        ;<i class="fa fa-youtube-play" style="font-size: 20px" ></i> ;; TheKronosIncidentTheKidnapping/
+#Sample4        ;<i class="fa fa-youtube-play" style="font-size: 20px" ></i> ;; find-fa-icon/
 --- 
 <br/>
 <div style="position: relative;bottom:10;width:100%;">
 ---
-#About             ; fas fa-book-reader  ;;                    ;;
+#About          ;<i class="fas fa-book-reader" style="font-size: 20px" ></i>;;                    ;;

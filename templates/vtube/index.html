@@ -31,8 +31,18 @@
 .tab-content {
     text-align: initial;
     overflow: auto;
-    font-size: small;
     padding: 20px !important;
+    font-family: "Google Sans", Sans, Roboto, Arial, sans-serif;
+}
+
+#tabs .ui-tabs-nav .ui-state-default a  {
+    color: #c0c0c0;
+    font-family: "Google Sans", Sans, Roboto, Arial, sans-serif;
+}
+
+#tabs .ui-tabs-nav .ui-state-active a {
+    color: #6d96e9 !important;
+    border-bottom: #2006ea 3px solid !important;
 }
 </style>
 
@@ -41,26 +51,14 @@
 <link href="/static/geoui/slidermenu.css" rel="stylesheet" />
 <script src="/static/geoui/slidermenu.js"></script>
 
-{% include "vtube/sidebar.html" %}
 
 <div class="content fcontainer" style="height: calc(100vh - 80px);">
     <div class="split content" style="flex: 1 1 auto;">
-        <div id="one" class="dflex" style="padding-left:5px; min-width: 1px; overflow: scroll;">
-            <div>
-                    <div style="font-size: smaller;color:#777; padding: 5px;">
-                        <label class="label1">filter</label>
-                        <input class="input1" id=vfilter   size=2 value=*>  
-                    </div>
-                    <div id="vlist">
-
-                    </div>
-            </div>
-
-        </div>
+        {% include "vtube/sidebar.html" %}
         <div id="two" class=dflex >
-            <div id=oneh style="height: 190px;width: 100%; background-size:100% 100%;">
+            <div id=oneh style="height: 190px;height: 100%; background-size:100% 100%;">
                 <!-- img src="/static/media/cap/houseprice.png" height="100%" / --> 
-                <video id="vplayer" width="100%"  controls>
+                <video id="vplayer" height="100%"  controls>
                     <source src="/static/vtube/videos/index.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
@@ -71,9 +69,9 @@
 
             <div id="tabs" class=tabs style="border: 0px; border-left: 1px solid #f7f7f7">
                 <ul>
-                    <li><a href="#tabs-trans"  >Transcripts</a></li>
-                    <li><a href="#tabs-disc"   >Discussions</a></li>
-                    <li><a href="#tabs-add"    >Summary</a></li>
+                    <li><a href="#tabs-trans"  > <i class="fa fa-file-text"></i> Transcripts</a></li>
+                    <li><a href="#tabs-disc"   > <i class="fa fa-comments" ></i> Discussions</a></li>
+                    <li><a href="#tabs-add"    > <i class="fa fa-list" ></i> Overview</a></a></li>
                 </ul>
                 <div style="width:100%; height: 1px; background: #efefef"> </div>
                 <div class="tabs-details" style="width: 100%;" >
@@ -135,11 +133,7 @@ Split(['#oneh', '#tabs'], {
     },
 })
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 $(document).ready(function() {
-
-    getSideBar()
-
 })
 </script>
 {% endblock %}

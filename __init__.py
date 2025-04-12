@@ -1,10 +1,8 @@
-import os, sys
+import os
 
-sys.path.append("/opt/utils/geo_utils/")
-try:
-    import geoapp.transcribe
-except Exception as e:
-    print(f"\n*******\n***** ERROR LOADING\n{e}\n*******\n*******")
-    pass
-
-
+print ("Initializing vtube folder: " + os.getcwd())
+if (os.path.exists("vtube/services.py")):
+    from . import services
+else:
+    print("Services file does not exist")
+    
