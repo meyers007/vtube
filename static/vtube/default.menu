@@ -1,7 +1,7 @@
 #Sample1        ;<i class="fas fa-home" style="font-size: 20px; color: red;" ></i> ;; 
-##Sample11      ;<i class="fa fa-youtube-play" style="font-size: 20px" ></i> ;; /static/vtube/videos/vtube/index1.mp4
+##Sample11      ;<i class="fa fa-youtube-play" style="font-size: 20px" ></i> ;; /static/vtube/videos/media/index.mp4
 ##Sample12      ;<i class="fa fa-youtube-play" style="font-size: 20px" ></i> ;; https://www.youtube.com/embed/Yq0QkCxoTHM?si=H3jXvJfBfK8xjpL7
-##Sample13      ;<i class="fa fa-youtube-play" style="font-size: 20px" ></i> ;; DisasterStHimarkCitizenScienceRescue/
+##Sample13      ;<i class="fa fa-youtube-play" style="font-size: 20px" ></i> ;; /static/vtube/videos/media/index.mp4
 #Sample2        ;<i class="fa fa-youtube-play" style="font-size: 20px" ></i> ;; DisasterStHimarkCrowdsourcingSituationalAwareness;
 #Sample3        ;<i class="fa fa-youtube-play" style="font-size: 20px" ></i> ;; TheKronosIncidentTheKidnapping/
 #Sample4        ;<i class="fa fa-youtube-play" style="font-size: 20px" ></i> ;; find-fa-icon/
