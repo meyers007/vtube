@@ -26,10 +26,50 @@ function getSideBar() {
         }, 'text').fail(function() {
             console.error("An error occurred while reading the file.");
     });
-    console.log(CURRENT_ITEM)
     if (CURRENT_ITEM){
         setTimeout(findItemAndSet, 300, CURRENT_ITEM)
     }
+}
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+function setMetaDataCB(responseTxt, statusTxt, xhr, ctx, formData) {
+    //responseTxt  = responseTxt.replaceAll("NaN", '""')
+    var resp = JSON.parse(responseTxt)
+
+    $("#tabs-transcripts").html(resp.transcripts.replaceAll("\n", "<br/>") || "Update transcripts") 
+    $("#tabs-discussion").html(resp.qa) 
+
+    $("#tabs-overview").html(resp.summary.replaceAll("\n", "<br/><br/>") || "Overview - update") 
+}
+function setMetaData(src){
+    ctx = {src: src}
+    callws("/vtube/getDetails/", "", setMetaDataCB, ctx)
+}
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+function addQACB(responseTxt, statusTxt, xhr, ctx, formData) {
+    $("#tabs-discussion").html(responseTxt) 
+}
+function addQA(){
+    var d = $('#vcomment').html().trim()
+    if (!d) {
+        $('#vcomment').effect( "shake" )
+        $('#vcomment').focus()
+        return
+    }
+    let src =  ($('#vplayer').is(':visible')) ? $('#vplayer').attr('src'):
+                                    $('#youtube').attr('src')
+    
+    let ctx = {comments: d, src: src}
+    callws("/vtube/addQA/", "", addQACB, ctx)
+}
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+function updateVTubeMeta(what="transcript|summary") {
+    let src =  ($('#vplayer').is(':visible')) ? $('#vplayer').attr('src'):
+                                    $('#youtube').attr('src')
+    
+
+    var d = (what.startsWith("su"))? $("#tabs-overview").html(): $("#tabs-transcripts").html();
+    let ctx = {content: d, src: src, what: what}
+    callws("/vtube/update/", "", null, ctx)
 }
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 function setVideoSource(src){
@@ -44,6 +84,7 @@ function setVideoSource(src){
         $('#vplayer').show()
         $('#vplayer').attr('src',src)
     }
+    setMetaData(src)
 }
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function myMenuItemClicked(f, a){

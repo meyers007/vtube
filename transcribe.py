@@ -16,13 +16,36 @@ def transcribe(file ="/Users/snarayan/Desktop/data/audio/index.mp4", **kwargs):
     tr = whisper.load_model("base", device=device)
     result = tr.transcribe(file)
     return result
+#-----------------------------------------------------------------------------------
+def convert_seconds_to_dhms(total_seconds):
+    secs = int(total_seconds)
+    if ( secs <=60):
+        return str(secs)
+    seconds = secs % 60
+    total_minutes = secs // 60
+    minutes = total_minutes % 60
+    if ( secs < 3600):
+        return f"{minutes}.{seconds}"
 
-def para(txt):
-    sents = txt.split(". ")
-    ret = ""
-    for i in range(0,len(sents),5):
-        ret +=  " ".join(sents[i:i+5]) + "\n"
-    return ret 
+    total_hours = total_minutes // 60
+    hours = total_hours % 24
+    return f"{hours}:{minutes}:{seconds}"
+#-----------------------------------------------------------------------------------
+def para(ret):
+    trans = ""
+    temp = ""
+    for t in ret['segments']:
+        if (not temp):
+            ts = convert_seconds_to_dhms(t['start'])
+            #te = convert_seconds_to_dhms(t['end'])
+            #temp=f"{ts} - {te} "
+            temp=f"<a class=timea onclick='vtubegoto({t['start']})' > {ts}: </a>"
+        temp += t['text']
+        if ( len(temp) > 512):
+            trans += temp + "\n\n"
+            temp = ""
+    trans += temp
+    return (trans)
 #-----------------------------------------------------------------------------------
 sysargs=None
 def addargs():
@@ -43,7 +66,7 @@ if __name__ == '__main__':
         t1 = datetime.datetime.now()
         sysargs = addargs()
         ret = transcribe(sysargs.url)
-        par = para(ret['text'])
+        par = para(ret)
 
         with open(sysargs.url + ".transcript", "w") as f:
             f.write(par)

@@ -33,6 +33,7 @@
     overflow: auto;
     padding: 20px !important;
     font-family: "Google Sans", Sans, Roboto, Arial, sans-serif;
+    height: calc(100% - (50px));
 }
 
 #tabs .ui-tabs-nav .ui-state-default a  {
@@ -43,6 +44,24 @@
 #tabs .ui-tabs-nav .ui-state-active a {
     color: #6d96e9 !important;
     border-bottom: #2006ea 3px solid !important;
+}
+.tabedit{
+    padding: 4px;
+    border-radius: 6px;
+}
+
+.vtubeComments{
+    padding: 14px;
+    border-radius: 1px;
+    border-bottom: 1px solid #ddd;
+    margin-top: 10px;
+}
+
+.timea {
+    color: #6d96e9 !important;
+}
+.timea:hover {
+    color: #e9926d !important;
 }
 </style>
 
@@ -69,23 +88,47 @@
 
             <div id="tabs" class=tabs style="border: 0px; border-left: 1px solid #f7f7f7">
                 <ul>
-                    <li><a href="#tabs-trans"  > <i class="fa fa-file-text"></i> Transcripts</a></li>
-                    <li><a href="#tabs-disc"   > <i class="fa fa-comments" ></i> Discussions</a></li>
-                    <li><a href="#tabs-add"    > <i class="fa fa-list" ></i> Overview</a></a></li>
+                    <li><a href="#tabs-transcriptsp"     > <i class="fa fa-file-text"></i> Transcripts</a></li>
+                    <li><a href="#tabs-discussionp"> <i class="fa fa-comments" ></i> Discussions</a></li>
+                    <li><a href="#tabs-overviewp"  > <i class="fa fa-list" ></i> Overview</a></a></li>
                 </ul>
                 <div style="width:100%; height: 1px; background: #efefef"> </div>
                 <div class="tabs-details" style="width: 100%;" >
-                    <div id="tabs-trans"    class="tab-content" >If transcripts are available, it will show here </div>
-                    <div id="tabs-disc"     class="tab-content" >
-                        <input class="input1" id=vcomment
-                        style="border: 0; border-bottom: 1px solid gray;width:100%"   >  
-                        <a href=# onclick=""> Add Comment</a>
-                        <div id="pcomments">
+                    <div id="tabs-transcriptsp"  class="tab-content" >
+                        <button class=rbutt32 style="display: block; float: right;"  
+                                data-toggle="tooltip" title="Update transcript"
+                            onclick="updateVTubeMeta('trans')"><i class="fa fa-file-text" ></i>
+                        </button>
+                        <hr/>
+                        <div id="tabs-transcripts" class=tabedit onclick="this.contentEditable = true">
 
                         </div>
-                    </div>
-                    <div id="tabs-add" class="tab-content" >
 
+                    </div>
+
+
+                    <div id="tabs-discussionp"     class="tab-content" >
+                        <div id=vcomment class=tabedit onclick="this.contentEditable = true"
+                            style="border: 1px solid rgb(16, 149, 36);width:100%; min-height: 80px;">
+                            Your comments
+                        </div>
+                           <button class="btn btn-outline-info btn-sm" onclick="addQA()">Add Comments</button>
+
+                        <div id="tabs-discussion" class=tabedit onclick1="this.contentEditable = true">
+                            overview
+                        </div>
+                    </div>
+
+
+                    <div id="tabs-overviewp" class="tab-content" >
+                        <button class=rbutt32 style="display: block; float: right;"  
+                            data-toggle="tooltip" title="Update Overview"
+                            onclick="updateVTubeMeta('summary')"><i class="fa fa-book" ></i>
+                        </button>
+                        <hr/>
+                        <div id="tabs-overview" class=tabedit onclick="this.contentEditable = true">
+                            overview
+                        </div>
                     </div>
                 </div>
             </div>
@@ -132,6 +175,11 @@ Split(['#oneh', '#tabs'], {
         localStorage.setItem('split-sizes1', JSON.stringify(sizes))
     },
 })
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+function vtubegoto(s) {
+    $('#vplayer')[0].currentTime = s
+}
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $(document).ready(function() {
 })
